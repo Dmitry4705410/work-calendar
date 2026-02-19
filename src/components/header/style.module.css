@@ -1,0 +1,59 @@
+.header {
+    -webkit-app-region: drag;
+    border-bottom: solid 2px rgba(82,82,82,1);
+    -webkit-box-shadow: 0px 3px 7px 0px rgba(82,82,82,0.3);
+    box-shadow: 0px 3px 7px 0px rgba(82,82,82,0.3);
+}
+
+.headerItems{
+    height: 55px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.logo {
+    text-align: center;
+    user-select: none;
+}
+
+.headerRight{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    gap: 10px;
+}
+.settings:hover{
+    cursor: pointer;
+}
+
+.settings, .headerRight > div {
+    -webkit-app-region: no-drag;
+}
+
+.close {
+    cursor: pointer;
+    transition: transform  0.2s ease;
+}
+
+.close:hover {
+    transform: rotate(90deg);
+    color: rgb(229, 50, 93);
+}
+
+.settings{
+    cursor: pointer;
+    transition: transform  0.2s ease;
+}
+
+.settings:hover {
+    transform: rotate(90deg);
+}
+
+.hide{
+    cursor: pointer;
+    transition: transform  0.2s ease;
+}
