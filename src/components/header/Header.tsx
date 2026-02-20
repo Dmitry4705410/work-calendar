@@ -12,8 +12,8 @@ export default function Header({ onSettingsClick, onRefresh }: HeaderProps) {
     <div className={classes.header}>
       <div className={classes.headerItems}>
         <div className={classes.logo}>
-          <Text className={classes.logo} variant={"display-1"} color={"warning"}>
-            Календарь
+          <Text className={classes.logo} variant={"subheader-3"} color={"warning"}>
+            Рабочий календарь
           </Text>
         </div>
         <div>
