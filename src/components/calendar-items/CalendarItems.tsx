@@ -20,6 +20,7 @@ export default function CalendarItems({ settings, onUpdated, fetchRef }: {
     setLoading(true)
     const result = await getCalendarItems(settings)
     setItems(result)
+    await window.electronAPI.setStore('calendarItems', result)
     setLoading(false)
     onUpdated()
   }
