@@ -1,12 +1,13 @@
 import classes from './style.module.css'
 import { Icon, Text } from "@gravity-ui/uikit";
-import {Xmark, Minus, Gear} from '@gravity-ui/icons';
+import {Xmark, Minus, Sliders, ArrowsRotateLeft} from '@gravity-ui/icons';
 
 interface HeaderProps {
-  onSettingsClick: () => void
+  onSettingsClick: () => void,
+  onRefresh: () => void
 }
 
-export default function Header({ onSettingsClick }: HeaderProps) {
+export default function Header({ onSettingsClick, onRefresh }: HeaderProps) {
   return (
     <div className={classes.header}>
       <div className={classes.headerItems}>
@@ -17,8 +18,11 @@ export default function Header({ onSettingsClick }: HeaderProps) {
         </div>
         <div>
           <div className={classes.headerRight}>
+            <div onClick={onRefresh}>
+              <Icon className={classes.refresh} data={ArrowsRotateLeft} size={20} color={"warning"}/>
+            </div>
             <div onClick={onSettingsClick}>
-              <Icon className={classes.settings} data={Gear} size={20} color={"warning"}/>
+              <Icon className={classes.settings} data={Sliders} size={20} color={"warning"}/>
             </div>
             <div onClick={() => window.electronAPI.minimizeWindow()}>
               <Icon className={classes.hide} data={Minus} size={20} color={"warning"}/>

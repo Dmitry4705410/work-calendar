@@ -88,7 +88,7 @@ export default function Settings({ isOpen, onClose, setting, onSave }: SettingsP
             <NumberInput label={"Интервал обновления"}
                          size={"l"}
                          max={60}
-                         min={5}
+                         min={2}
                          defaultValue={15}
                          endContent={<Label size="s">мин</Label>}
                          value={form.interval}

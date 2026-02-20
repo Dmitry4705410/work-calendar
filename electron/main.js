@@ -35,7 +35,7 @@ function createWindow() {
   ipcMain.handle('store-set', (_, key, value) => store.set(key, value))
 
   if (isDev) {
-    win.loadURL('http://localhost:5175')
+    win.loadURL('http://localhost:5173')
     // win.webContents.openDevTools()
   } else {
     win.loadFile(path.join(__dirname, '../dist/index.html'))

@@ -53,6 +53,15 @@
     transform: rotate(90deg);
 }
 
+ .refresh{
+     cursor: pointer;
+     transition: transform  0.2s ease;
+ }
+
+.refresh:hover {
+    transform: rotate(-180deg);
+}
+
 .hide{
     cursor: pointer;
     transition: transform  0.2s ease;
