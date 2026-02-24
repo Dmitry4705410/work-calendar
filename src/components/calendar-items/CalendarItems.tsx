@@ -14,6 +14,7 @@ export default function CalendarItems({ settings, onUpdated, fetchRef }: {
   const { getCalendarItems } = useExchange();
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState<CalendarItemType[]>([])
+  const [initialized, setInitialized] = useState(false);
   const {add} = useToaster();
 
   const fetch = async () => {
@@ -26,6 +27,11 @@ export default function CalendarItems({ settings, onUpdated, fetchRef }: {
   }
 
   useEffect(() => {
+    if (!initialized) {
+      setInitialized(true)
+      setLoading(false)
+      return
+    }
     if (!settings.server || !settings.login || !settings.password) {
       add({ name: 'settings_empty', title: 'Заполните данные в настройках', theme: 'warning' })
       setLoading(false)
