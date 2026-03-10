@@ -39,7 +39,7 @@ function setupAutoUpdater() {
 
 
 function createWindow() {
-  const win = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     width: 450,
     height: 650,
     resizable: false,
@@ -52,12 +52,12 @@ function createWindow() {
     }
   })
 
-  win.once('ready-to-show', () => {
-    win.show()
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
   })
 
-  ipcMain.on('window-close', () => win.close())
-  ipcMain.on('window-minimize', () => win.minimize())
+  ipcMain.on('window-close', () => mainWindow.close())
+  ipcMain.on('window-minimize', () => mainWindow.minimize())
 
   ipcMain.handle('open-external', (_, url) => shell.openExternal(url))
   ipcMain.handle('store-get', (_, key) => store.get(key))
@@ -67,10 +67,10 @@ function createWindow() {
   ipcMain.handle('update-install', () => autoUpdater.quitAndInstall())
 
   if (isDev) {
-    win.loadURL('http://localhost:5173')
-    win.webContents.openDevTools()
+    mainWindow.loadURL('http://localhost:5173')
+    mainWindow.webContents.openDevTools()
   } else {
-    win.loadFile(path.join(__dirname, '../dist/index.html'))
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
   }
 }
 

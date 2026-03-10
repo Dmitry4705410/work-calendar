@@ -12,6 +12,7 @@ interface Window {
     onUpdateProgress: (callback: (progress: { percent: number }) => void) => void
     onUpdateError: (callback: (message: string) => void) => void
     downloadUpdate: () => Promise<void>
-    installUpdate: () => void
+    installUpdate: () => void,
+    removeAllUpdateListeners: () => void
   }
 }

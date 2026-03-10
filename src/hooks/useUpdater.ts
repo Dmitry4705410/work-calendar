@@ -47,6 +47,10 @@ export function useUpdater() {
         theme: 'danger',
       })
     })
+
+    return () => {
+      api.removeAllUpdateListeners?.()
+    }
   }, [])
 
   const downloadUpdate = async () => {

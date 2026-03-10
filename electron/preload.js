@@ -6,11 +6,17 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getStore: (key) => ipcRenderer.invoke('store-get', key),
   setStore: (key, value) => ipcRenderer.invoke('store-set', key, value),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
-  
+
   onUpdateAvailable: (callback) => ipcRenderer.on('update-available', (_, info) => callback(info)),
   onUpdateDownloaded: (callback) => ipcRenderer.on('update-downloaded', () => callback()),
   onUpdateProgress: (callback) => ipcRenderer.on('update-progress', (_, progress) => callback(progress)),
   onUpdateError: (callback) => ipcRenderer.on('update-error', (_, msg) => callback(msg)),
   downloadUpdate: () => ipcRenderer.invoke('update-download'),
   installUpdate: () => ipcRenderer.invoke('update-install'),
+  removeAllUpdateListeners: () => {
+    ipcRenderer.removeAllListeners('update-available')
+    ipcRenderer.removeAllListeners('update-downloaded')
+    ipcRenderer.removeAllListeners('update-progress')
+    ipcRenderer.removeAllListeners('update-error')
+  },
 })
