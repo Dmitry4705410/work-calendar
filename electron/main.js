@@ -12,8 +12,11 @@ async function initStore() {
 }
 
 function setupAutoUpdater() {
-  autoUpdater.autoDownload = false // качаем только по запросу пользователя
+  autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
+  if (isDev) {
+    autoUpdater.forceDevUpdateConfig = true
+  }
 
   autoUpdater.on('update-available', (info) => {
     mainWindow.webContents.send('update-available', info)
@@ -30,11 +33,7 @@ function setupAutoUpdater() {
   autoUpdater.on('error', (err) => {
     mainWindow.webContents.send('update-error', err.message)
   })
-
-  // Проверяем обновления при старте (только в prod)
-  if (!isDev) {
     autoUpdater.checkForUpdates()
-  }
 }
 
 

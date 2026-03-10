@@ -18,7 +18,6 @@ export function useUpdater() {
         title: `Доступно обновление v${info.version}`,
         content: 'Откройте настройки для установки',
         theme: 'info',
-        autoHiding: false,
       })
     })
 
@@ -33,8 +32,7 @@ export function useUpdater() {
         name: 'update-ready',
         title: 'Обновление загружено',
         content: 'Нажмите "Установить" в настройках',
-        theme: 'success',
-        autoHiding: false,
+        theme: 'success'
       })
     })
 
