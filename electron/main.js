@@ -1,13 +1,42 @@
 const { app, BrowserWindow, ipcMain  } = require('electron')
+const { autoUpdater } = require('electron-updater')
 const path = require('path')
 const { shell } = require('electron')
 const isDev = process.env.NODE_ENV === 'development'
 let store
+let mainWindow
 
 async function initStore() {
   const { default: Store } = await import('electron-store')
   store = new Store()
 }
+
+function setupAutoUpdater() {
+  autoUpdater.autoDownload = false // качаем только по запросу пользователя
+  autoUpdater.autoInstallOnAppQuit = true
+
+  autoUpdater.on('update-available', (info) => {
+    mainWindow.webContents.send('update-available', info)
+  })
+
+  autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update-downloaded')
+  })
+
+  autoUpdater.on('download-progress', (progress) => {
+    mainWindow.webContents.send('update-progress', progress)
+  })
+
+  autoUpdater.on('error', (err) => {
+    mainWindow.webContents.send('update-error', err.message)
+  })
+
+  // Проверяем обновления при старте (только в prod)
+  if (!isDev) {
+    autoUpdater.checkForUpdates()
+  }
+}
+
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -34,9 +63,12 @@ function createWindow() {
   ipcMain.handle('store-get', (_, key) => store.get(key))
   ipcMain.handle('store-set', (_, key, value) => store.set(key, value))
 
+  ipcMain.handle('update-download', () => autoUpdater.downloadUpdate())
+  ipcMain.handle('update-install', () => autoUpdater.quitAndInstall())
+
   if (isDev) {
     win.loadURL('http://localhost:5173')
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
   } else {
     win.loadFile(path.join(__dirname, '../dist/index.html'))
   }
@@ -45,6 +77,7 @@ function createWindow() {
 app.whenReady().then(async () => {
   await initStore()
   createWindow()
+  setupAutoUpdater()
 })
 
 app.on('window-all-closed', () => {

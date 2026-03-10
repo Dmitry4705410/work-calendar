@@ -1,9 +1,21 @@
 import classes from './style.module.css'
-import { Button, Checkbox, Icon, Label, NumberInput, Select, Text, TextInput, useToaster, } from "@gravity-ui/uikit";
+import {
+  Button,
+  Checkbox,
+  Icon,
+  Label,
+  NumberInput,
+  Progress,
+  Select,
+  Text,
+  TextInput,
+  useToaster,
+} from "@gravity-ui/uikit";
 import { Eye, EyeSlash } from '@gravity-ui/icons';
 import { useEffect, useState } from "react";
 import { Setting } from "../../hooks/useSettings";
 import { useExchange } from "../../hooks/useExchange";
+import { useUpdater } from "../../hooks/useUpdater";
 
 interface SettingsProps {
   isOpen: boolean,
@@ -49,7 +61,7 @@ export default function Settings({ isOpen, onClose, setting, onSave }: SettingsP
 
     setLoadingCheckConnect(false)
   }
-
+  const { updateStatus, downloadProgress, downloadUpdate, installUpdate } = useUpdater()
   return (
     <>
       {isOpen && <div className={classes.overlay} onClick={onClose}/>}
@@ -135,6 +147,28 @@ export default function Settings({ isOpen, onClose, setting, onSave }: SettingsP
           <Button loading={loadingCheckConnect} onClick={handleCheck} size={"l"} width={"max"}>Проверить
             подключение</Button>
         </div>
+        {updateStatus === 'available' && (
+          <div className={classes.button}>
+            <Button onClick={downloadUpdate} view={"outlined-info"} size={"l"} width={"max"}>
+              Скачать обновление
+            </Button>
+          </div>
+        )}
+
+        {updateStatus === 'downloading' && (
+          <div className={classes.input}>
+            <Text variant="body-1">Загрузка... {downloadProgress}%</Text>
+            <Progress value={downloadProgress} size="s" />
+          </div>
+        )}
+
+        {updateStatus === 'ready' && (
+          <div className={classes.button}>
+            <Button onClick={installUpdate} view={"outlined-success"} size={"l"} width={"max"}>
+              Установить и перезапустить
+            </Button>
+          </div>
+        )}
         <div className={classes.button}>
           <Button onClick={handleSave} view={"action"} size={"l"} width={"max"}>Сохранить</Button>
         </div>
