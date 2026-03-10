@@ -46,6 +46,9 @@ export default function CalendarItems({ settings, onUpdated, fetchRef }: {
     return () => clearInterval(timer)
   }, [settings])
 
+  const filteredItems = items.filter(
+    item => !settings.hidePastMeetings || new Date(item.end) > new Date()
+  )
   return (
     <div className={classes.calendarItems}>
       <div className={classes.header}>
@@ -65,8 +68,14 @@ export default function CalendarItems({ settings, onUpdated, fetchRef }: {
               Встречи не найдены
             </Text>
           </div>
-        ) : (
-          items.map((item, i) => (
+        ) : filteredItems.length === 0 ? (
+          <div className={classes.empty}>
+            <Text variant={"subheader-1"}>
+              Встречи на сегодня закончились
+            </Text>
+          </div>
+        ): (
+          filteredItems.map((item, i) => (
             <CalendarItem
               key={i}
               subject={item.subject}

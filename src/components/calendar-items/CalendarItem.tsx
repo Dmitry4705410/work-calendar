@@ -10,8 +10,6 @@ interface CalendarItemProps {
 }
 
 export default function CalendarItem({ subject, start, end, location, organizer, isCancelled }: CalendarItemProps) {
-  console.log(start)
-  console.log(end)
   const initials = organizer.split(' ').slice(0, 2).map(w => w[0]).join('')
   const isUrl = (str: string) => str.startsWith('http://') || str.startsWith('https://')
 

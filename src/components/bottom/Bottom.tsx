@@ -1,6 +1,7 @@
 import classes from './style.module.css'
 import { Text } from "@gravity-ui/uikit"
 import { useEffect, useState } from "react"
+import { version } from '../../../package.json'
 
 export default function Bottom({ lastUpdated }: { lastUpdated: Date | null }) {
   const [, forceUpdate] = useState(0)
@@ -18,8 +19,11 @@ export default function Bottom({ lastUpdated }: { lastUpdated: Date | null }) {
   }
 
   return (
-      <div className={classes.bottom}>
-        <Text variant="caption-1" color="secondary">{getLabel()}</Text>
+    <div className={classes.bottom}>
+      <Text variant="caption-1" color="secondary">{getLabel()}</Text>
+      <div className={classes.version}>
+        <Text variant="caption-1" color="light-hint">Версия: v{version}</Text>
       </div>
+    </div>
   )
 }

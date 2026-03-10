@@ -11,8 +11,8 @@ async function initStore() {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 500,
-    height: 800,
+    width: 450,
+    height: 650,
     resizable: false,
     frame: false,
     show: false,

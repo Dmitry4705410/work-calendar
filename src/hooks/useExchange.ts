@@ -14,8 +14,11 @@ export function useExchange() {
   const {add} = useToaster();
   const ping = async (settings: Setting): Promise<number> => {
     const { server, login, password } = settings
-    const credentials = btoa(`${login}:${password}`)
-
+    const credentials = btoa(
+      new TextEncoder()
+        .encode(`${login}:${password}`)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    )
     const response = await fetch(`${server}/ews/exchange.asmx`, {
       method: 'GET',
       headers: {
@@ -29,7 +32,11 @@ export function useExchange() {
   const getCalendarItems = async (settings: Setting): Promise<CalendarItem[]> => {
     try {
       const { server, login, password } = settings
-      const credentials = btoa(`${login}:${password}`)
+      const credentials = btoa(
+        new TextEncoder()
+          .encode(`${login}:${password}`)
+          .reduce((data, byte) => data + String.fromCharCode(byte), '')
+      )
 
       const now = new Date()
       const tzOffset = now.getTimezoneOffset()

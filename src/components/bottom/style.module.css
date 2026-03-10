@@ -13,3 +13,11 @@
     left: 0;
     right: 0;
 }
+
+.version {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    font-size: 10px; /* можно подстроить */
+    color: rgba(0,0,0,0.5); /* чуть прозрачнее */
+}
