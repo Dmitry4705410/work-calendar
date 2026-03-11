@@ -10,6 +10,11 @@ export interface CalendarItem {
   IsCancelled: boolean
 }
 
+const extractUrl = (text: string): string => {
+  const match = text.match(/https?:\/\/\S+/)
+  return match ? match[0] : text
+}
+
 export function useExchange() {
   const {add} = useToaster();
   const ping = async (settings: Setting): Promise<number> => {
@@ -106,7 +111,7 @@ export function useExchange() {
           subject: get('Subject'),
           start: get('Start'),
           end: get('End'),
-          location: get('Location'),
+          location: extractUrl(get('Location')),
           organizer: get('Organizer Name'),
           IsCancelled: get('IsCancelled') === 'true',
         }
