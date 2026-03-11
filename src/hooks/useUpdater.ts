@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useToaster } from '@gravity-ui/uikit'
 
+const GITHUB_REPO = 'Dmitry4705410/work-calendar'
+
 export type UpdateStatus = 'idle' | 'available' | 'downloading' | 'ready' | 'error'
 
 export function useUpdater() {
@@ -18,6 +20,14 @@ export function useUpdater() {
         title: `Доступно обновление v${info.version}`,
         content: 'Откройте настройки для установки',
         theme: 'info',
+        actions: [
+          {
+            label: 'Открыть changelog',
+            onClick: () => window.electronAPI.openExternal(
+              `https://github.com/${GITHUB_REPO}/releases/tag/v${info.version}`
+            ),
+          }
+        ]
       })
     })
 
