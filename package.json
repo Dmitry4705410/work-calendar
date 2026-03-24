@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "com.calendar.app",
-    "productName": "Calendar",
+    "productName": "calendar",
     "directories": {
       "output": "release"
     },
