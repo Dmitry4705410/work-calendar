@@ -3,6 +3,8 @@ const { autoUpdater } = require('electron-updater')
 const path = require('path')
 const { shell } = require('electron')
 const isDev = process.env.NODE_ENV === 'development'
+const { init: initNotifications, destroy: destroyNotifications } = require('./notifications')
+
 let store
 let mainWindow
 
@@ -74,11 +76,14 @@ function createWindow() {
 }
 
 app.whenReady().then(async () => {
+  app.setAppUserModelId('com.calendar.app')
   await initStore()
+  initNotifications(store)
   createWindow()
   setupAutoUpdater()
 })
 
 app.on('window-all-closed', () => {
+  destroyNotifications()
   if (process.platform !== 'darwin') app.quit()
 })

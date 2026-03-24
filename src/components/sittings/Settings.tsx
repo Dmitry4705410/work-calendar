@@ -131,6 +131,16 @@ export default function Settings({ isOpen, onClose, setting, onSave }: SettingsP
         <div className={classes.input}>
           <Checkbox
             size="m"
+            checked={form.doNotDisturb}
+            onUpdate={(checked) =>
+              setForm(prev => ({ ...prev, doNotDisturb: checked }))
+            }
+          >Режим "Не беспокоить"
+          </Checkbox>
+        </div>
+        <div className={classes.input}>
+          <Checkbox
+            size="m"
             checked={form.hidePastMeetings}
             onUpdate={(checked) =>
               setForm(prev => ({ ...prev, hidePastMeetings: checked }))
@@ -158,7 +168,7 @@ export default function Settings({ isOpen, onClose, setting, onSave }: SettingsP
         {updateStatus === 'downloading' && (
           <div className={classes.input}>
             <Text variant="body-1">Загрузка... {downloadProgress}%</Text>
-            <Progress value={downloadProgress} size="s" />
+            <Progress value={downloadProgress} size="s"/>
           </div>
         )}
 

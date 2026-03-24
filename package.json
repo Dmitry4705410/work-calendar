@@ -1,6 +1,6 @@
 {
   "name": "calendar",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "electron/main.js",
   "scripts": {
     "dev:vite": "vite",
@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "com.calendar.app",
-    "productName": "Calendar",
+    "productName": "calendar",
     "directories": {
       "output": "release"
     },

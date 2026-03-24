@@ -6,7 +6,8 @@ export interface Setting {
   password: string
   interval: number | null
   notifications: string[],
-  hidePastMeetings: boolean
+  hidePastMeetings: boolean,
+  doNotDisturb: boolean
 }
 
 const defaultSettings: Setting = {
@@ -15,7 +16,8 @@ const defaultSettings: Setting = {
   password: '',
   interval: 15 ,
   notifications: [],
-  hidePastMeetings: false
+  hidePastMeetings: false,
+  doNotDisturb: false
 }
 
 export function useSettings() {

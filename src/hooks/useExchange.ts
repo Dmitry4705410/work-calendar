@@ -2,6 +2,7 @@ import { Setting } from './useSettings'
 import { useToaster } from "@gravity-ui/uikit";
 
 export interface CalendarItem {
+  id: string
   subject: string
   start: string
   end: string
@@ -108,6 +109,7 @@ export function useExchange() {
         const get = (tag: string) => item.querySelector(tag)?.textContent ?? ''
 
         return {
+          id: item.querySelector('ItemId')?.getAttribute('Id')!,
           subject: get('Subject'),
           start: get('Start'),
           end: get('End'),
