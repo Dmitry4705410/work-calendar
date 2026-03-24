@@ -1,4 +1,4 @@
-const { Notification, shell } = require('electron')
+const { showNotification } = require('./notificationWindow')
 
 let notifiedMap = {}
 let store = null
@@ -36,23 +36,20 @@ function markNotified(meetingId, minutesBefore) {
   saveNotifiedMap()
 }
 
-function sendNotification(title, body, url) {
-  if (!Notification.isSupported()) return
-  const notification = new Notification({ title, body })
-  if (url) notification.on('click', () => shell.openExternal(url))
-  notification.show()
-}
-
 function check() {
 
   const items = store.get('calendarItems', [])
   const settings = store.get('settings', {})
+
+  if (settings?.doNotDisturb) {
+    return
+  }
+
   const notificationMinutes = settings.notifications ?? []
 
   if (!items.length || !notificationMinutes.length) return
 
   const now = new Date()
-  console.log(now)
   for (const item of items) {
     if (item.IsCancelled) continue
 
@@ -68,9 +65,7 @@ function check() {
       if (msUntilNotify >= -30_000 && msUntilNotify <= 30_000) {
         if (!isNotified(item.id, minutes)) {
           markNotified(item.id, minutes)
-          const label = minutes >= 60 ? `${minutes / 60}ч` : `${minutes}м`
-          const url = item.location || null
-          sendNotification(`⏰ Встреча через ${label}`, item.subject, url)
+          showNotification(item, minutes)
         }
       }
     }
